@@ -4,19 +4,18 @@ import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import com.sandeep.factsapp.databinding.FactHolderBinding;
 import com.sandeep.factsapp.model.Fact;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class FactAdapter extends RecyclerView.Adapter<FactAdapter.FactHolder> {
 
-    private ArrayList<Fact> facts;
+    private List<Fact> facts;
 
-    FactAdapter(ArrayList<Fact> facts) {
+    FactAdapter(List<Fact> facts) {
         this.facts = facts;
     }
 
