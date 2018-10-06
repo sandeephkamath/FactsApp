@@ -2,11 +2,13 @@ package com.sandeep.factsapp;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 
 public class ListActivity extends AppCompatActivity {
+
+    RecyclerView factsListView;
+    FactAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -14,6 +16,8 @@ public class ListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
 
 
     }
