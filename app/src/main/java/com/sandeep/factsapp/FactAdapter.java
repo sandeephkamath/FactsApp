@@ -9,16 +9,23 @@ import android.view.ViewGroup;
 import com.sandeep.factsapp.databinding.FactHolderBinding;
 import com.sandeep.factsapp.model.Fact;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FactAdapter extends RecyclerView.Adapter<FactAdapter.FactHolder> {
 
     private List<Fact> facts;
 
-    FactAdapter(List<Fact> facts) {
+    public void setData(List<Fact> facts) {
         this.facts = facts;
+        notifyDataSetChanged();
     }
 
+    public void clear() {
+        if (null != facts) {
+            facts.clear();
+        }
+    }
 
     @NonNull
     @Override

@@ -18,4 +18,7 @@ public class FactsViewModel extends AndroidViewModel {
         return factListObservable;
     }
 
+    public void getFacts() {
+        FactsRepository.getInstance().getFacts();
+    }
 }
