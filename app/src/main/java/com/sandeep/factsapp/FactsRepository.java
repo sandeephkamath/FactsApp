@@ -2,13 +2,12 @@ package com.sandeep.factsapp;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 
 import com.sandeep.factsapp.model.Fact;
+import com.sandeep.factsapp.model.FactsModel;
 import com.sandeep.factsapp.network.RestClient;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 
 import rx.Subscriber;

@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.sandeep.factsapp.model.FactsModel;
+
 public class ListActivity extends AppCompatActivity {
 
     RecyclerView factsListView;
