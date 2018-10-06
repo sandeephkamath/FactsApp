@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -22,13 +23,14 @@ public class ListActivity extends AppCompatActivity {
     ProgressBar progressBar;
     TextView noResultsView;
     SwipeRefreshLayout swipeRefreshLayout;
+    Toolbar toolbar;
     private FactsViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 
@@ -39,6 +41,7 @@ public class ListActivity extends AppCompatActivity {
         swipeRefreshLayout = findViewById(R.id.swipe_container);
         adapter = new FactAdapter();
         factsListView.setAdapter(adapter);
+        factsListView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -68,6 +71,7 @@ public class ListActivity extends AppCompatActivity {
                             progressBar.setVisibility(View.GONE);
                             factsListView.setVisibility(View.VISIBLE);
                             adapter.setData(factsModel.getFacts());
+                            toolbar.setTitle(factsModel.getTitle());
                             break;
                         case FactsModel.ERROR:
                             swipeRefreshLayout.setRefreshing(false);

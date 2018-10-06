@@ -10,43 +10,47 @@
             type="com.sandeep.factsapp.model.Fact" />
     </data>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:padding="@dimen/margin_10">
 
         <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/title"
+            style="@style/Base.TextAppearance.AppCompat.Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin_10"
+            android:ellipsize="end"
+            android:maxLines="2"
             android:text="@{fact.title}"
-            tools:text="Title" />
+            tools:text="@tools:sample/lorem/random" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/description"
+            style="@style/Base.TextAppearance.AppCompat.Subhead"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_alignParentStart="true"
+            android:layout_below="@id/title"
+            android:layout_marginEnd="@dimen/margin_10"
+            android:layout_toStartOf="@id/image"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:text="@{fact.description}"
+            tools:text="@tools:sample/lorem/random" />
 
-            <android.support.v7.widget.AppCompatTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignStart="@+id/image"
-                android:text="@{fact.description}"
-                tools:text="Sub Title" />
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@id/title"
+            android:adjustViewBounds="true"
+            android:maxWidth="200dp"
+            android:setImage="@{fact.imageHref}"
+            tools:src="@mipmap/ic_launcher_round" />
 
-
-            <ImageView
-                android:id="@+id/image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:maxHeight="50dp"
-                android:maxWidth="50dp"
-                android:setImage="@{fact.imageHref}"
-                tools:src="@mipmap/ic_launcher" />
-
-        </RelativeLayout>
-
-    </LinearLayout>
+    </RelativeLayout>
 
 </layout>
