@@ -40,6 +40,7 @@ public class FactsRepository {
                 .map(new Func1<FactsModel, FactsModel>() {
                     @Override
                     public FactsModel call(FactsModel factsModel) {
+                        //Remove invalid facts from the list
                         for (Iterator<Fact> iterator = factsModel.getFacts().listIterator(); iterator.hasNext(); ) {
                             Fact fact = iterator.next();
                             if (fact.isInvalid()) {
