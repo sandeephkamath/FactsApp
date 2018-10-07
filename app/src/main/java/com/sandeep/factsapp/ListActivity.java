@@ -3,6 +3,7 @@ package com.sandeep.factsapp;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -16,32 +17,36 @@ import android.widget.TextView;
 
 import com.sandeep.factsapp.model.FactsModel;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ListActivity extends AppCompatActivity {
 
+    @BindView(R.id.facts_list_view)
     RecyclerView factsListView;
-    FactAdapter adapter;
+
+    @BindView(R.id.progress_indicator)
     ProgressBar progressBar;
+
+    @BindView(R.id.no_result_view)
     TextView noResultsView;
+
+    @BindView(R.id.swipe_container)
     SwipeRefreshLayout swipeRefreshLayout;
+
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
+
     private FactsViewModel viewModel;
+    private FactAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-        toolbar = findViewById(R.id.toolbar);
+        ButterKnife.bind(this);
         setSupportActionBar(toolbar);
-
-
-        factsListView = findViewById(R.id.facts_list_view);
-        progressBar = findViewById(R.id.progress_indicator);
-        factsListView.setLayoutManager(new LinearLayoutManager(this));
-        noResultsView = findViewById(R.id.no_result_view);
-        swipeRefreshLayout = findViewById(R.id.swipe_container);
-        adapter = new FactAdapter();
-        factsListView.setAdapter(adapter);
-        factsListView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        setupFactsRecyclerView();
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -54,9 +59,15 @@ public class ListActivity extends AppCompatActivity {
         observeViewModel();
     }
 
+    private void setupFactsRecyclerView() {
+        factsListView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new FactAdapter();
+        factsListView.setAdapter(adapter);
+        factsListView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+    }
+
     private void observeViewModel() {
         viewModel = ViewModelProviders.of(this).get(FactsViewModel.class);
-
         viewModel.getFactListObservable().observe(this, new Observer<FactsModel>() {
             @Override
             public void onChanged(@Nullable FactsModel factsModel) {
@@ -66,23 +77,31 @@ public class ListActivity extends AppCompatActivity {
                             progressBar.setVisibility(View.VISIBLE);
                             break;
                         case FactsModel.SUCCESS:
-                            swipeRefreshLayout.setRefreshing(false);
-                            noResultsView.setVisibility(View.GONE);
-                            progressBar.setVisibility(View.GONE);
-                            factsListView.setVisibility(View.VISIBLE);
-                            adapter.setData(factsModel.getFacts());
-                            toolbar.setTitle(factsModel.getTitle());
+                            onSuccess(factsModel);
                             break;
                         case FactsModel.ERROR:
-                            swipeRefreshLayout.setRefreshing(false);
-                            progressBar.setVisibility(View.GONE);
-                            factsListView.setVisibility(View.GONE);
-                            noResultsView.setVisibility(View.VISIBLE);
+                            onError();
                             break;
                     }
                 }
             }
         });
+    }
+
+    private void onError() {
+        swipeRefreshLayout.setRefreshing(false);
+        progressBar.setVisibility(View.GONE);
+        factsListView.setVisibility(View.GONE);
+        noResultsView.setVisibility(View.VISIBLE);
+    }
+
+    private void onSuccess(FactsModel factsModel) {
+        swipeRefreshLayout.setRefreshing(false);
+        noResultsView.setVisibility(View.GONE);
+        progressBar.setVisibility(View.GONE);
+        factsListView.setVisibility(View.VISIBLE);
+        adapter.setData(factsModel.getFacts());
+        toolbar.setTitle(factsModel.getTitle());
     }
 
 }
