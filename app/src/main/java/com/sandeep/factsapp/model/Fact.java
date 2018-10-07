@@ -24,10 +24,6 @@ public class Fact {
         return imageHref;
     }
 
-    public void setImageHref(String imageHref) {
-        this.imageHref = imageHref;
-    }
-
     public String getTitle() {
         return title;
     }

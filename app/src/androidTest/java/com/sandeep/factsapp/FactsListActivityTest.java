@@ -4,7 +4,6 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.sandeep.factsapp.facts_list_module.FactsListActivity;
-import com.sandeep.factsapp.network.RestClient;
 
 import org.junit.Rule;
 import org.junit.Test;

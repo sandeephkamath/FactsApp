@@ -2,7 +2,6 @@ package com.sandeep.factsapp.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.sandeep.factsapp.model.Fact;
 
 import java.util.List;
 
