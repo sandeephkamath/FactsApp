@@ -1,7 +1,6 @@
 package com.sandeep.factsapp.model;
 
 import android.databinding.BindingAdapter;
-import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -32,8 +31,13 @@ public class Fact {
         this.title = title;
     }
 
+    public void setImageHref(String imageHref) {
+        this.imageHref = imageHref;
+    }
+
     public boolean isInvalid() {
-        return TextUtils.isEmpty(getTitle()) && TextUtils.isEmpty(getDescription()) && TextUtils.isEmpty(getImageHref());
+        //return TextUtils.isEmpty(getTitle()) && TextUtils.isEmpty(getDescription()) && TextUtils.isEmpty(getImageHref());
+        return null == getTitle() && null == getDescription() && null == getImageHref();
     }
 
     @BindingAdapter({"android:setImage"})
