@@ -1,9 +1,8 @@
-package com.sandeep.factsapp;
+package com.sandeep.factsapp.facts_list_module;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -15,12 +14,13 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.sandeep.factsapp.R;
 import com.sandeep.factsapp.model.FactsModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ListActivity extends AppCompatActivity {
+public class FactsListActivity extends AppCompatActivity {
 
     @BindView(R.id.facts_list_view)
     RecyclerView factsListView;

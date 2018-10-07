@@ -1,4 +1,4 @@
-package com.sandeep.factsapp;
+package com.sandeep.factsapp.facts_list_module;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
