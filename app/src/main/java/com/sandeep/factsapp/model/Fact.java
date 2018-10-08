@@ -46,4 +46,26 @@ public class Fact {
                 .load(imageUrl)
                 .into(view);
     }
+
+    public boolean isItemSame(Fact fact) {
+        return isTitleSame(fact);
+    }
+
+    public boolean isContentSame(Fact fact) {
+        return isItemSame(fact) && isDescriptionSame(fact) && isImageSame(fact);
+    }
+
+    private boolean isTitleSame(Fact fact) {
+        return getTitle() == null ? fact.getTitle() == null : getTitle().equals(fact.getTitle());
+    }
+
+    private boolean isDescriptionSame(Fact fact) {
+        return getTitle() == null ? fact.getTitle() == null : getTitle().equals(fact.getTitle());
+    }
+
+    private boolean isImageSame(Fact fact) {
+        return getTitle() == null ? fact.getTitle() == null : getTitle().equals(fact.getTitle());
+    }
+
+
 }

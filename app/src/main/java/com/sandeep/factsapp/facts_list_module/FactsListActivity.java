@@ -51,7 +51,6 @@ public class FactsListActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 factsListView.setVisibility(View.GONE);
-                adapter.clear();
                 viewModel.getFacts();
             }
         });

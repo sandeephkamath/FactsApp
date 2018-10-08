@@ -2,6 +2,7 @@ package com.sandeep.factsapp.facts_list_module;
 
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -9,7 +10,9 @@ import android.view.ViewGroup;
 import com.sandeep.factsapp.R;
 import com.sandeep.factsapp.databinding.FactHolderBinding;
 import com.sandeep.factsapp.model.Fact;
+import com.sandeep.factsapp.model.FactDiffCallback;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FactAdapter extends RecyclerView.Adapter<FactAdapter.FactHolder> {
@@ -17,14 +20,12 @@ public class FactAdapter extends RecyclerView.Adapter<FactAdapter.FactHolder> {
     private List<Fact> facts;
 
     public void setData(List<Fact> facts) {
-        this.facts = facts;
-        notifyDataSetChanged();
-    }
-
-    public void clear() {
-        if (null != facts) {
-            facts.clear();
+        if (this.facts == null) {
+            this.facts = new ArrayList<>();
         }
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new FactDiffCallback(this.facts, facts));
+        diffResult.dispatchUpdatesTo(this);
+        this.facts = facts;
     }
 
     @NonNull
