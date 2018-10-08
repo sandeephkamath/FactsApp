@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -10,47 +11,55 @@
             type="com.sandeep.factsapp.model.Fact" />
     </data>
 
-    <RelativeLayout
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/margin_10">
+        android:layout_margin="@dimen/margin_5"
+        app:cardCornerRadius="@dimen/margin_5">
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/title"
-            style="@style/Base.TextAppearance.AppCompat.Title"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_10"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:text="@{fact.title}"
-            tools:text="@tools:sample/lorem/random" />
+            android:layout_marginStart="@dimen/margin_5">
 
-        <android.support.v7.widget.AppCompatTextView
-            android:id="@+id/description"
-            style="@style/Base.TextAppearance.AppCompat.Subhead"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_below="@id/title"
-            android:layout_marginEnd="@dimen/margin_10"
-            android:layout_toStartOf="@id/image"
-            android:ellipsize="end"
-            android:maxLines="3"
-            android:text="@{fact.description}"
-            tools:text="@tools:sample/lorem/random" />
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/title"
+                style="@style/Base.TextAppearance.AppCompat.Title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_10"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="@{fact.title}"
+                tools:text="@tools:sample/lorem/random" />
 
-        <ImageView
-            android:id="@+id/image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_below="@id/title"
-            android:adjustViewBounds="true"
-            android:maxWidth="200dp"
-            android:setImage="@{fact.imageHref}"
-            tools:src="@mipmap/ic_launcher_round" />
+            <android.support.v7.widget.AppCompatTextView
+                android:id="@+id/description"
+                style="@style/Base.TextAppearance.AppCompat.Subhead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/title"
+                android:layout_marginEnd="@dimen/margin_10"
+                android:layout_toStartOf="@id/image"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:text="@{fact.description}"
+                tools:text="@tools:sample/lorem/random" />
 
-    </RelativeLayout>
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@+id/title"
+                android:adjustViewBounds="true"
+                android:maxWidth="125dp"
+                android:setImage="@{fact.imageHref}"
+                tools:src="@mipmap/ic_launcher_round" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
 
 </layout>

@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -63,7 +62,7 @@ public class FactsListActivity extends AppCompatActivity {
         factsListView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new FactAdapter();
         factsListView.setAdapter(adapter);
-        factsListView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+       // factsListView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
     }
 
     private void observeViewModel() {
