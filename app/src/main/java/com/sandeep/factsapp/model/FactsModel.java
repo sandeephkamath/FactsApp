@@ -49,4 +49,8 @@ public class FactsModel {
     public String getErrorMessage() {
         return errorMessage;
     }
+
+    public boolean isValid() {
+        return getFacts() != null && getFacts().size() > 0;
+    }
 }

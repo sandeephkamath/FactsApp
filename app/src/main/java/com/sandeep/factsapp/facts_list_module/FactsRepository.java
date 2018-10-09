@@ -44,10 +44,12 @@ public class FactsRepository {
                     @Override
                     public FactsModel call(FactsModel factsModel) {
                         //Remove invalid facts from the list
-                        for (Iterator<Fact> iterator = factsModel.getFacts().listIterator(); iterator.hasNext(); ) {
-                            Fact fact = iterator.next();
-                            if (fact.isInvalid()) {
-                                iterator.remove();
+                        if (factsModel.isValid()) {
+                            for (Iterator<Fact> iterator = factsModel.getFacts().listIterator(); iterator.hasNext(); ) {
+                                Fact fact = iterator.next();
+                                if (fact.isInvalid()) {
+                                    iterator.remove();
+                                }
                             }
                         }
                         return factsModel;
@@ -81,9 +83,14 @@ public class FactsRepository {
 
             @Override
             public void onNext(FactsModel factsModel1) {
-                factsModel.setState(FactsModel.SUCCESS);
-                factsModel.setTitle(factsModel1.getTitle());
-                factsModel.setFacts(factsModel1.getFacts());
+                if (factsModel1.isValid()) {
+                    factsModel.setState(FactsModel.SUCCESS);
+                    factsModel.setTitle(factsModel1.getTitle());
+                    factsModel.setFacts(factsModel1.getFacts());
+                } else {
+                    factsModel.setState(FactsModel.ERROR);
+                    factsModel.setErrorMessage(context.getString(R.string.no_results_found));
+                }
                 data.postValue(factsModel);
             }
         };
