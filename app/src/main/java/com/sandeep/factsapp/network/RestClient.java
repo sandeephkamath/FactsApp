@@ -42,6 +42,7 @@ public class RestClient {
                     @Override
                     public Response intercept(@NonNull Chain chain) throws IOException {
                         Response originalResponse = chain.proceed(chain.request());
+                        //Cache header implementation.
                         if (Utils.isNetworkAvailable(context)) {
                             int maxAge = 60; // 1 minute
                             return originalResponse.newBuilder()

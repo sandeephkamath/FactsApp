@@ -23,6 +23,7 @@ public class FactAdapter extends RecyclerView.Adapter<FactAdapter.FactHolder> {
         if (this.facts == null) {
             this.facts = new ArrayList<>();
         }
+        //DiffUtil will compare old and new fact list and update the RecyclerView accordingly.
         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new FactDiffCallback(this.facts, facts));
         diffResult.dispatchUpdatesTo(this);
         this.facts = facts;
