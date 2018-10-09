@@ -11,8 +11,9 @@ import com.sandeep.factsapp.model.FactsModel;
 import com.sandeep.factsapp.network.RestClient;
 import com.sandeep.factsapp.utils.Utils;
 
-import java.util.Iterator;
+import java.util.List;
 
+import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
@@ -36,22 +37,29 @@ public class FactsRepository {
 
 
     public LiveData<FactsModel> getFacts(Context context) {
+
         final FactsModel factsModel = new FactsModel();
         factsModel.setState(FactsModel.LOADING);
         Subscriber<FactsModel> subscriber = getSubscriber(factsModel, context);
         RestClient.getRetrofitInterface(context).getFacts().subscribeOn(Schedulers.io())
-                .map(new Func1<FactsModel, FactsModel>() {
+                .flatMap(new Func1<FactsModel, Observable<Fact>>() {
                     @Override
-                    public FactsModel call(FactsModel factsModel) {
-                        //Remove invalid facts from the list
-                        if (factsModel.isValid()) {
-                            for (Iterator<Fact> iterator = factsModel.getFacts().listIterator(); iterator.hasNext(); ) {
-                                Fact fact = iterator.next();
-                                if (fact.isInvalid()) {
-                                    iterator.remove();
-                                }
-                            }
-                        }
+                    public Observable<Fact> call(FactsModel model) {
+                        factsModel.setTitle(model.getTitle());
+                        return Observable.from(model.getFacts());
+                    }
+                })
+                .filter(new Func1<Fact, Boolean>() {
+                    @Override
+                    public Boolean call(Fact fact) {
+                        return !fact.isInvalid();
+                    }
+                })
+                .toList()
+                .map(new Func1<List<Fact>, FactsModel>() {
+                    @Override
+                    public FactsModel call(List<Fact> facts) {
+                        factsModel.setFacts(facts);
                         return factsModel;
                     }
                 })
