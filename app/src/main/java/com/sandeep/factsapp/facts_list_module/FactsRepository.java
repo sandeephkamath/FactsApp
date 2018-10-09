@@ -2,11 +2,14 @@ package com.sandeep.factsapp.facts_list_module;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.sandeep.factsapp.R;
 import com.sandeep.factsapp.model.Fact;
 import com.sandeep.factsapp.model.FactsModel;
 import com.sandeep.factsapp.network.RestClient;
+import com.sandeep.factsapp.utils.Utils;
 
 import java.util.Iterator;
 
@@ -32,11 +35,11 @@ public class FactsRepository {
     }
 
 
-    public LiveData<FactsModel> getFacts() {
+    public LiveData<FactsModel> getFacts(Context context) {
         final FactsModel factsModel = new FactsModel();
         factsModel.setState(FactsModel.LOADING);
-        Subscriber<FactsModel> subscriber = getSubscriber(factsModel);
-        RestClient.getRetrofitInterface().getFacts().subscribeOn(Schedulers.io())
+        Subscriber<FactsModel> subscriber = getSubscriber(factsModel, context);
+        RestClient.getRetrofitInterface(context).getFacts().subscribeOn(Schedulers.io())
                 .map(new Func1<FactsModel, FactsModel>() {
                     @Override
                     public FactsModel call(FactsModel factsModel) {
@@ -58,7 +61,7 @@ public class FactsRepository {
     }
 
     @NonNull
-    private Subscriber<FactsModel> getSubscriber(final FactsModel factsModel) {
+    private Subscriber<FactsModel> getSubscriber(final FactsModel factsModel, final Context context) {
         return new Subscriber<FactsModel>() {
             @Override
             public void onCompleted() {
@@ -68,6 +71,11 @@ public class FactsRepository {
             @Override
             public void onError(Throwable e) {
                 factsModel.setState(FactsModel.ERROR);
+                if (Utils.isNetworkAvailable(context)) {
+                    factsModel.setErrorMessage(context.getString(R.string.no_results_found));
+                } else {
+                    factsModel.setErrorMessage(context.getString(R.string.no_internet_message));
+                }
                 data.postValue(factsModel);
             }
 

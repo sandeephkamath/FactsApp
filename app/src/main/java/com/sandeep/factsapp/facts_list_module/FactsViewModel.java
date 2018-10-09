@@ -13,7 +13,7 @@ public class FactsViewModel extends AndroidViewModel {
 
     public FactsViewModel(@NonNull Application application) {
         super(application);
-        factListObservable = FactsRepository.getInstance().getFacts();
+        factListObservable = FactsRepository.getInstance().getFacts(application);
     }
 
     public LiveData<FactsModel> getFactListObservable() {
@@ -21,6 +21,6 @@ public class FactsViewModel extends AndroidViewModel {
     }
 
     public void getFacts() {
-        FactsRepository.getInstance().getFacts();
+        FactsRepository.getInstance().getFacts(getApplication());
     }
 }

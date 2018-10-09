@@ -16,6 +16,7 @@ public class FactsModel {
     @Expose
     private List<Fact> facts;
     private String title;
+    private String errorMessage;
 
     public int getState() {
         return state;
@@ -39,5 +40,13 @@ public class FactsModel {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public void setErrorMessage(String errorMessage) {
+        this.errorMessage = errorMessage;
+    }
+
+    public String getErrorMessage() {
+        return errorMessage;
     }
 }

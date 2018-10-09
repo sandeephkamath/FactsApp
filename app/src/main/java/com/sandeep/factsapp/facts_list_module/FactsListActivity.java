@@ -61,7 +61,7 @@ public class FactsListActivity extends AppCompatActivity {
         factsListView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new FactAdapter();
         factsListView.setAdapter(adapter);
-       // factsListView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        // factsListView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
     }
 
     private void observeViewModel() {
@@ -78,7 +78,7 @@ public class FactsListActivity extends AppCompatActivity {
                             onSuccess(factsModel);
                             break;
                         case FactsModel.ERROR:
-                            onError();
+                            onError(factsModel);
                             break;
                     }
                 }
@@ -86,7 +86,8 @@ public class FactsListActivity extends AppCompatActivity {
         });
     }
 
-    private void onError() {
+    private void onError(FactsModel factsModel) {
+        noResultsView.setText(factsModel.getErrorMessage());
         swipeRefreshLayout.setRefreshing(false);
         progressBar.setVisibility(View.GONE);
         factsListView.setVisibility(View.GONE);
