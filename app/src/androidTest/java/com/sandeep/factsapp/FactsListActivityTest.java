@@ -3,7 +3,7 @@ package com.sandeep.factsapp;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.sandeep.factsapp.facts_list_module.FactsListActivity;
+import com.sandeep.factsapp.view.FactsListActivity;
 
 import org.junit.Rule;
 import org.junit.Test;

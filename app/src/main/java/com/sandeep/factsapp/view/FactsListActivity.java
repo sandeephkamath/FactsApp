@@ -1,4 +1,4 @@
-package com.sandeep.factsapp.facts_list_module;
+package com.sandeep.factsapp.view;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.sandeep.factsapp.R;
 import com.sandeep.factsapp.model.FactsModel;
+import com.sandeep.factsapp.viewmodel.FactsViewModel;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

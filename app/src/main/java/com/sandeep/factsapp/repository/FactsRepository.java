@@ -1,4 +1,4 @@
-package com.sandeep.factsapp.facts_list_module;
+package com.sandeep.factsapp.repository;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;

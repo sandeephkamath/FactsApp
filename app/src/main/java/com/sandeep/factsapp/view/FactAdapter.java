@@ -1,4 +1,4 @@
-package com.sandeep.factsapp.facts_list_module;
+package com.sandeep.factsapp.view;
 
 import android.databinding.DataBindingUtil;
 import android.support.annotation.NonNull;
