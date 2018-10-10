@@ -43,17 +43,10 @@ public class RestClient {
                     public Response intercept(@NonNull Chain chain) throws IOException {
                         Response originalResponse = chain.proceed(chain.request());
                         //Cache header implementation.
-                        if (Utils.isNetworkAvailable(context)) {
-                            int maxAge = 60; // 1 minute
-                            return originalResponse.newBuilder()
-                                    .header("Cache-Control", "public, max-age=" + maxAge)
-                                    .build();
-                        } else {
                             int maxStale = 60 * 60 * 24 * 28; // 4 weeks
                             return originalResponse.newBuilder()
-                                    .header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
+                                    .header("Cache-Control", "public, max-age=" + maxStale)
                                     .build();
-                        }
                     }
                 })
                 .cache(cache)
