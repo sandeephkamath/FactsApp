@@ -34,23 +34,30 @@ public class RestClient {
 
     @NonNull
     private static OkHttpClient getOkHttpClient(final Context context) {
-        File httpCacheDirectory = new File(context.getCacheDir(), "responses");
-        int cacheSize = 10 * 1024 * 1024; // 10 MB
-        Cache cache = new Cache(httpCacheDirectory, cacheSize);
-        return new OkHttpClient().newBuilder()
-                .addNetworkInterceptor(new Interceptor() {
-                    @Override
-                    public Response intercept(@NonNull Chain chain) throws IOException {
-                        Response originalResponse = chain.proceed(chain.request());
-                        //Cache header implementation.
-                            int maxStale = 60 * 60 * 24 * 28; // 4 weeks
-                            return originalResponse.newBuilder()
-                                    .header("Cache-Control", "public, max-age=" + maxStale)
-                                    .build();
-                    }
-                })
-                .cache(cache)
-                .build();
+
+        Cache cache = null;
+        if (context != null) {
+            File httpCacheDirectory = new File(context.getCacheDir(), "responses");
+            int cacheSize = 10 * 1024 * 1024; // 10 MB
+            cache = new Cache(httpCacheDirectory, cacheSize);
+        }
+
+        OkHttpClient.Builder builder = new OkHttpClient().newBuilder();
+        builder.addNetworkInterceptor(new Interceptor() {
+            @Override
+            public Response intercept(@NonNull Chain chain) throws IOException {
+                Response originalResponse = chain.proceed(chain.request());
+                //Cache header implementation.
+                int maxStale = 60 * 60 * 24 * 28; // 4 weeks
+                return originalResponse.newBuilder()
+                        .header("Cache-Control", "public, max-age=" + maxStale)
+                        .build();
+            }
+        });
+        if (cache != null) {
+            builder.cache(cache);
+        }
+        return builder.build();
     }
 
 
