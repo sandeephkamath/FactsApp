@@ -23,6 +23,7 @@ import static org.hamcrest.Matchers.not;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
@@ -58,6 +59,12 @@ public class FactViewModelTest {
         // API SUCCESS
         assertEquals(liveData.getValue().getState(), FactsModel.SUCCESS);
         assertTrue(liveData.getValue().isValid());
+        //Error case
+        liveData = factsViewModel.getFacts(new MockRepo().getFactListObservable());
+        Thread.sleep(1000);
+        assertNotNull(liveData.getValue());
+        assertEquals(liveData.getValue().getState(), FactsModel.ERROR);  // Added error case bu mocking response.
+        assertFalse(liveData.getValue().isValid()); // Invalid case
     }
 
     @Test
@@ -70,6 +77,11 @@ public class FactViewModelTest {
         assertFalse(liveData.getValue().getFacts().isEmpty());
         // Fact list empty check
         assertThat(liveData.getValue().getFacts(), not(IsEmptyCollection.empty()));
+        //Error case
+        liveData = factsViewModel.getFacts(new MockRepo().getFactListObservable());
+        Thread.sleep(1000);
+        assertNotNull(liveData.getValue());
+        assertNull(liveData.getValue().getFacts());
     }
 
     @Test
@@ -80,6 +92,12 @@ public class FactViewModelTest {
         assertNotNull(liveData.getValue());
         // Title check
         assertFalse(liveData.getValue().getTitle().isEmpty());
+
+        //Error case
+        liveData = factsViewModel.getFacts(new MockRepo().getFactListObservable());
+        Thread.sleep(1000);
+        assertNotNull(liveData.getValue());
+        assertNull(liveData.getValue().getTitle());
     }
 
 }

@@ -36,17 +36,21 @@ public class FactsRepository {
     }
 
 
-    public LiveData<FactsModel> getFacts(Context context) {
+    public LiveData<FactsModel> getFacts(Context context, Observable<FactsModel> factsModelObservable) {
 
         final FactsModel factsModel = new FactsModel();
         factsModel.setState(FactsModel.LOADING);
         Subscriber<FactsModel> subscriber = getSubscriber(factsModel, context);
-        RestClient.getRetrofitInterface(context).getFacts().subscribeOn(Schedulers.io())
+        factsModelObservable.subscribeOn(Schedulers.io())
                 .flatMap(new Func1<FactsModel, Observable<Fact>>() {
                     @Override
                     public Observable<Fact> call(FactsModel model) {
-                        factsModel.setTitle(model.getTitle());
-                        return Observable.from(model.getFacts());
+                        if (model != null && model.getFacts() != null) {
+                            factsModel.setTitle(model.getTitle());
+                            return Observable.from(model.getFacts());
+                        } else {
+                            return Observable.error(new Throwable("Invalid Response"));
+                        }
                     }
                 })
                 .filter(new Func1<Fact, Boolean>() {
@@ -81,10 +85,12 @@ public class FactsRepository {
             @Override
             public void onError(Throwable e) {
                 factsModel.setState(FactsModel.ERROR);
-                if (Utils.isNetworkAvailable(context)) {
-                    factsModel.setErrorMessage(context.getString(R.string.no_results_found));
-                } else {
-                    factsModel.setErrorMessage(context.getString(R.string.no_internet_message));
+                if (context != null) {
+                    if (Utils.isNetworkAvailable(context)) {
+                        factsModel.setErrorMessage(context.getString(R.string.no_results_found));
+                    } else {
+                        factsModel.setErrorMessage(context.getString(R.string.no_internet_message));
+                    }
                 }
                 data.postValue(factsModel);
             }
